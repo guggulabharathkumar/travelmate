@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TravelMate - Share a Lift</title>
+  <style>
+    :root {
+      --bg: #eef7ff;
+      --surface: #ffffff;
+      --primary: #0e6cff;
+      --primary-dark: #0849a5;
+      --text: #102a43;
+      --muted: #516676;
+      --accent: #ff8a00;
+      --radius: 24px;
+      --shadow: 0 24px 48px rgba(16, 42, 67, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: linear-gradient(180deg, #f4fbff 0%, #eef7ff 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .brand span {
+      color: var(--primary);
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 24px;
+      font-weight: 600;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 40px;
+      align-items: center;
+      margin-top: 48px;
+    }
+
+    .hero-content {
+      max-width: 640px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.75rem, 4vw, 4.25rem);
+      line-height: 1.02;
+      margin-bottom: 24px;
+    }
+
+    .hero-content p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 28px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .button,
+    .button-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .button:hover,
+    .button-secondary:hover {
+      transform: translateY(-1px);
+    }
+
+    .button {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 18px 30px rgba(14, 108, 255, 0.18);
+    }
+
+    .button-secondary {
+      background: #f6f9ff;
+      color: var(--text);
+    }
+
+    .hero-image {
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at top left, rgba(14, 108, 255, 0.16), transparent 40%),
+        linear-gradient(180deg, #ffffff 0%, #edf6ff 100%);
+      border-radius: 36px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      min-height: 420px;
+    }
+
+    .hero-image .card {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 24px 40px rgba(14, 108, 255, 0.08);
+    }
+
+    .hero-image h2 {
+      font-size: 1.35rem;
+      margin-bottom: 16px;
+    }
+
+    .hero-image p {
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .how-it-works {
+      margin-top: 64px;
+      background: linear-gradient(180deg, rgba(14, 108, 255, 0.06), transparent 80%);
+      border-radius: 32px;
+      padding: 42px 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .how-it-works h2 {
+      margin-bottom: 22px;
+      font-size: 2rem;
+    }
+
+    .steps {
+      display: grid;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 18px 16px;
+      background: white;
+      border-radius: 20px;
+    }
+
+    .step-marker {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .cta-banner {
+      margin-top: 64px;
+      background: var(--primary);
+      color: white;
+      border-radius: 30px;
+      padding: 30px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cta-banner h2 {
+      margin-bottom: 10px;
+      font-size: 1.7rem;
+    }
+
+    .cta-banner p {
+      color: rgba(255, 255, 255, 0.88);
+      max-width: 640px;
+    }
+
+    .status-card {
+      margin-top: 32px;
+      background: white;
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .status-card h3 {
+      margin-bottom: 14px;
+    }
+
+    .status-card p {
+      margin-bottom: 16px;
+      color: var(--muted);
+    }
+
+    .status-card button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 700;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 26px;
+      border-top: 1px solid #dfe7ee;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav a {
+        margin-left: 0;
+        margin-right: 18px;
+      }
+
+      .cta-banner {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">Travel<span>Mate</span></div>
+      <nav>
+        <a href="#how">How it works</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#join">Join</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <p>Connecting travelers who are heading the same way.</p>
+        <h1>Share a lift, travel smarter, and help someone on the road.</h1>
+        <p>TravelMate helps people offering rides and people looking for a safe lift find each other in the same city or neighborhood.</p>
+        <div class="buttons">
+          <button class="button" onclick="updateStatus('offer')">I want to offer a lift</button>
+          <button class="button-secondary" onclick="updateStatus('request')">I need a lift</button>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <div class="card">
+          <h2>Quick match preview</h2>
+          <p>Enter your current location and destination, then let fellow travelers know you can share a ride. TravelMate makes it easy to stay connected.</p>
+          <div class="status-card">
+            <h3>Ready to help?</h3>
+            <p id="status-message">Choose whether you want to offer a lift or request one to see the next step.</p>
+            <button id="status-action" onclick="alert('Start by sharing your route and preferences on the next page.')">Get started</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits" class="feature-grid">
+      <div class="feature-card">
+        <h3>Save money</h3>
+        <p>Share commuting costs and split fuel expenses with someone traveling in the same direction.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Travel safely</h3>
+        <p>Connect with passengers or drivers from your neighborhood so you can feel confident on every ride.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Reduce traffic</h3>
+        <p>One extra lift means one fewer car on the road — better for everyone and kinder to the environment.</p>
+      </div>
+    </section>
+
+    <section id="how" class="how-it-works">
+      <h2>How TravelMate works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-marker">1</div>
+          <div>
+            <h3>Share your route</h3>
+            <p>Tell us where you are and where you're heading. We match people who are traveling along the same path.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-marker">2</div>
+          <div>
+            <h3>Find a partner</h3>
+            <p>Whether you're offering a lift or need one, discover compatible travelers nearby with a simple match preview.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-marker">3</div>
+          <div>
+            <h3>Meet and ride</h3>
+            <p>Connect safely, meet at a convenient spot, and enjoy a shared journey that strengthens your community.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-banner" id="join">
+      <div>
+        <h2>Be the person who makes travel easier.</h2>
+        <p>One small lift can change someone’s day. Offer your route or find a trusted ride in minutes.</p>
+      </div>
+      <button class="button" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Start sharing now</button>
+    </section>
+
+    <footer>
+      <div>© 2026 TravelMate. A friendly way to share lifts and build better travel.</div>
+      <div>Built for travelers and neighbors.</div>
+    </footer>
+  </div>
+
+  <script>
+    function updateStatus(type) {
+      const message = document.getElementById('status-message');
+      const action = document.getElementById('status-action');
+      if (type === 'offer') {
+        message.textContent = 'You are offering a lift. Once you share your route, a traveler heading the same way can join you safely.';
+        action.textContent = 'Share your route';
+        action.onclick = () => alert('Great! Start by telling others where you are heading.');
+      } else {
+        message.textContent = 'You are requesting a lift. Enter your pickup point and destination so a driver can offer a ride.';
+        action.textContent = 'Request a lift';
+        action.onclick = () => alert('Great! Describe your route and wait for a matching offer.');
+      }
+    }
+  </script>
+</body>
+</html>
